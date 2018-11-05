@@ -34,9 +34,12 @@ var stringifyJSON = function(obj) {
   } else {
     results += '{';
     for (var key in obj) {
-        results += '"' + key '": ' + stringifyJSON(obj[key]) + ', ';
+        results += '"' + key + '":' + stringifyJSON(obj[key]) + ',';
     }
-    results = results.splice(0,results.length-2)
+    if( Object.keys(obj).length > 0 ){
+      results = results.substring(0,results.length-1);
+    }
+    results += '}';
   }
     
 
