@@ -5,4 +5,46 @@
 
 var stringifyJSON = function(obj) {
   // your code goes here
+
+  var results = '';
+
+  // check if string
+  if (typeof obj === 'string') {
+    // if string, append to results with quotes
+    results += '"' + obj + '"';
+
+  // check not a string, object, array
+  } else if (typeof obj !== 'object' || obj === null) {
+    // if not any of the above, convert to string and add to result
+    results += '' + obj;
+  
+  // check if array
+  } else if (Array.isArray(obj)) {
+    // if array, iterate through all array elements and stringify each
+    results += '[';
+    // format subResult to JSON, with brackets
+    for (var i = 0; i < obj.length; i++) {
+        results += stringifyJSON(obj[i])
+        if (i !== obj.length-1) {
+            results += ',';
+        }
+    }
+    results += ']';
+  
+  } else {
+    results += '{';
+    for (var key in obj) {
+        results += '"' + key '": ' + stringifyJSON(obj[key]) + ', ';
+    }
+    results = results.splice(0,results.length-2)
+  }
+    
+
+
+  // check if object
+    // if object, iterate through all keys and call stringify on values
+    // format subResult to JSON, with braces and stringifyied key
+
+  return results;
+
 };
