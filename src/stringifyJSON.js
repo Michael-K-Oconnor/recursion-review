@@ -33,10 +33,15 @@ var stringifyJSON = function(obj) {
   
   } else {
     results += '{';
+    var invalidValues = 0;
     for (var key in obj) {
-        results += '"' + key + '":' + stringifyJSON(obj[key]) + ',';
+      if( obj[key] === undefined || typeof obj[key] === 'function'){
+          invalidValues++;
+          continue;
+      }
+      results += '"' + key + '":' + stringifyJSON(obj[key]) + ',';
     }
-    if( Object.keys(obj).length > 0 ){
+    if( Object.keys(obj).length-invalidValues > 0 ){
       results = results.substring(0,results.length-1);
     }
     results += '}';
